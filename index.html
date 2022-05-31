@@ -7,7 +7,6 @@
   <!-- InstanceBeginEditable name="doctitle" -->
 <title>UConn NRCA</title>
 <!-- InstanceEndEditable -->
-  <link href="../css/normalize.css" rel="stylesheet">
 <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 	  
@@ -23,7 +22,6 @@
   <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
   <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
   <!--[if gt IE 8]> 		<html class="no-js"> <![endif]-->
-  <link href="../css/banner-master/banner.css" rel="stylesheet">
   <style>
 /**
    * The banner assumes a margin of 0px, but is not included
@@ -41,7 +39,6 @@ body {
   <!-- Use if you need responsive layouts for IE -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
   <!-- end UConn Banner -->
-  <link rel="stylesheet" href="../css/custom-main.css">
   <!-- InstanceBeginEditable name="head" -->
      <!-- InstanceEndEditable -->
   <script type="text/javascript">
@@ -83,7 +80,6 @@ function MM_swapImage() { //v3.0
 
 </script>
   <!--______________end Google Analytics Code_______________-->
-  <body onLoad="MM_preloadImages('../images/template/icon-facebook2.png')">
 
 <!-- ______________________ -->
 <div class="container">
@@ -262,7 +258,7 @@ function MM_swapImage() { //v3.0
          });
 
         // load project data
-        $.getJSON("nrca-projects.json", function(data) {
+        $.getJSON("https://nrca-projects.npkn.net/nrca-projects-json/", function(data) {
           var $items;
           $.each(data, function(key, value) {
             var $item = $('<div />', {
