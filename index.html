@@ -182,6 +182,23 @@ function MM_swapImage() { //v3.0
             <option value=".ctp">CTP</option>
           </select>
 
+          <label for="year" class="filter-label">Year</label>
+          <select id="year" name="year" class="form-control filter">
+            <option value="" selected>All</option>
+            <!-- "value" should come from the capStr or ctpStr columns, preceded by a "." -->
+            <option value=".2012">2012</option>
+            <option value=".2013">2013</option>
+            <option value=".2014">2014</option>
+            <option value=".2015">2015</option>
+            <option value=".2016">2016</option>
+            <option value=".2017">2017</option>
+            <option value=".2018">2018</option>
+            <option value=".2019">2019</option>
+            <option value=".2020">2020</option>
+            <option value=".2021">2021</option>
+            <option value=".2022">2022</option>
+          </select>
+
           <label for="tech" class="filter-label">Tech</label>
           <select id="tech" name="tech" class="form-control filter">
             <!-- "value" should come from one of the tech columns, preceded by a "." -->
@@ -266,6 +283,8 @@ function MM_swapImage() { //v3.0
               value.capStr + ' ' +
               value.ctpStr + ' ' +
 
+              value.year + ' ' +
+
               value.mapStr + ' ' +
               value.collectStr + ' ' +
               value.wildlifeStr + ' ' +
@@ -314,8 +333,7 @@ function MM_swapImage() { //v3.0
             // Some projects link out to one or more of Google Maps, a storybook,
             // a PDF, etc.
             // Add those links here
-
-            if (value.projectUrl !== null) {
+            if (value.projectUrl !== undefined) {
               // We expect links to be comma-separated in the JSON file
               var links = value.projectUrl.split(',');
 
@@ -371,6 +389,10 @@ function MM_swapImage() { //v3.0
             filter($projects);
           });
 
+          $('select#year').on('change', function() {
+            filter($projects);
+          });
+
           $('select#tech').on('change', function() {
             filter($projects);
           });
@@ -405,9 +427,10 @@ function MM_swapImage() { //v3.0
 
         var $categoriesFilter = $('#categories input');
         var $programFilter = $('select#program');
+        var $yearFilter = $('select#year');
         var $techFilter = $('select#tech');
         var $locationFilter = $('select#location');
-        var program, tech, loc;
+        var program, year, tech, loc;
 
         // Categories are inclusive, return more results
         var inclusives = [];
@@ -419,11 +442,12 @@ function MM_swapImage() { //v3.0
 
         // Program, Tech, and Location are exclusive, return fewer results
         program = $programFilter.val();
+        year = $yearFilter.val();
         tech = $techFilter.val();
         loc = $locationFilter.val();
 
         // add exclusive filters so they look like '.cap.mapping.hartford'
-        var exclusives = program + tech + loc;
+        var exclusives = program + year + tech + loc;
 
         // combine inclusives and exclusives
         if (inclusives.length > 0) {
