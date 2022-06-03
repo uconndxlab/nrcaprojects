@@ -433,13 +433,22 @@ function MM_swapImage() { //v3.0
         var program, year, tech, loc;
 
         // Categories are inclusive, return more results
+        /*
         var inclusives = [];
         $categoriesFilter.each( function( i, elem ) {
           if ( elem.checked ) {
             inclusives.push( elem.value );
           }
-        });
+        });*/
 
+        // Categories are not inclusive, return less results
+        var inclusives = "";
+        $categoriesFilter.each( function( i, elem ) {
+          if ( elem.checked ) {
+            inclusives += elem.value
+          }
+        });
+        
         // Program, Tech, and Location are exclusive, return fewer results
         program = $programFilter.val();
         year = $yearFilter.val();
@@ -451,6 +460,8 @@ function MM_swapImage() { //v3.0
 
         // combine inclusives and exclusives
         if (inclusives.length > 0) {
+          //commented code is for inclusive
+          /*
           var filterList = [];
           var f = '';
           for (var i=0; i<inclusives.length; i++) {
@@ -458,6 +469,9 @@ function MM_swapImage() { //v3.0
             filterList.push(f)
           }
           var filterValue = filterList.length ? filterList.join(', ') : '*';
+          */
+          
+          var filterValue = inclusives + exclusives
         } else {
           filterValue = exclusives
         }
