@@ -7,10 +7,9 @@
   <!-- InstanceBeginEditable name="doctitle" -->
 <title>UConn NRCA</title>
 <!-- InstanceEndEditable -->
-  <link href="../css/normalize.css" rel="stylesheet">
 <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-	  
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -23,7 +22,6 @@
   <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
   <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
   <!--[if gt IE 8]> 		<html class="no-js"> <![endif]-->
-  <link href="../css/banner-master/banner.css" rel="stylesheet">
   <style>
 /**
    * The banner assumes a margin of 0px, but is not included
@@ -41,7 +39,6 @@ body {
   <!-- Use if you need responsive layouts for IE -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
   <!-- end UConn Banner -->
-  <link rel="stylesheet" href="../css/custom-main.css">
   <!-- InstanceBeginEditable name="head" -->
      <!-- InstanceEndEditable -->
   <script type="text/javascript">
@@ -83,7 +80,6 @@ function MM_swapImage() { //v3.0
 
 </script>
   <!--______________end Google Analytics Code_______________-->
-  <body onLoad="MM_preloadImages('../images/template/icon-facebook2.png')">
 
 <!-- ______________________ -->
 <div class="container">
@@ -93,27 +89,52 @@ function MM_swapImage() { //v3.0
       <!-- COPY HTML START -->
       <!-- --------------- -->
       <style>
+        body {
+          font-family:"noto-sans",sans-serif!important
+        }
+        p{
+          display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+        }
       .grid-sizer {
         height: 250px;
       }
       .project-title {
-        font-size: 1.2em;
+        font-size: 16px;
+        line-height:1.6em;
+        font-weight:600;
       }
       .project-item {
         padding-left: 15px;
         padding-right: 15px;
       }
       .project-item-content {
-        padding: 15px 10px 10px 10px;
-        height: 300px;
+        padding: 10px 10px 10px 10px;
+        height: 400px;
+        background-color:#F0F3F7;
+        border:none;
       }
 
       .project-link {
-        color: #4A4848;
+        color: white;
+        background:#da7b29;
+        margin:0px!important;
+        padding:5px 10px;
+        border-radius:50px;
+        
       }
-
-      .project-link:hover, .project-link:active, .project-link:visited {
-        color: #4A4848;
+      .project-link:active, .project-link:visited {
+        color: white;
+        text-decoration:none;
+        background-color:#da7b29;
+      }
+      .project-link:hover{
+        color: white;
+        text-decoration:none;
+        background-color:#F29B31;
       }
 
       .filter-label {
@@ -122,6 +143,11 @@ function MM_swapImage() { //v3.0
       .filter-label {
         margin-top: 13px;
       }
+      .well{
+        background-color:#F0F3F7;
+        border:none;
+      }
+
       /* Add sticky to prevent filter scroll */
       @media screen and (min-width: 750px) {
         #project_filter {
@@ -192,6 +218,23 @@ function MM_swapImage() { //v3.0
             <!-- "value" should come from the capStr or ctpStr columns, preceded by a "." -->
             <option value=".cap">CAP</option>
             <option value=".ctp">CTP</option>
+          </select>
+
+          <label for="year" class="filter-label">Year</label>
+          <select id="year" name="year" class="form-control filter">
+            <option value="" selected>All</option>
+            <!-- "value" should come from the capStr or ctpStr columns, preceded by a "." -->
+            <option value=".2012">2012</option>
+            <option value=".2013">2013</option>
+            <option value=".2014">2014</option>
+            <option value=".2015">2015</option>
+            <option value=".2016">2016</option>
+            <option value=".2017">2017</option>
+            <option value=".2018">2018</option>
+            <option value=".2019">2019</option>
+            <option value=".2020">2020</option>
+            <option value=".2021">2021</option>
+            <option value=".2022">2022</option>
           </select>
 
           <label for="tech" class="filter-label">Tech</label>
@@ -270,13 +313,15 @@ function MM_swapImage() { //v3.0
          });
 
         // load project data
-        $.getJSON("nrca-projects.json", function(data) {
+        $.getJSON("https://nrca-projects.npkn.net/nrca-projects-json/", function(data) {
           var $items;
           $.each(data, function(key, value) {
             var $item = $('<div />', {
               'class': ' col-xs-12 col-sm-6 col-md-4 project-item ' +
               value.capStr + ' ' +
               value.ctpStr + ' ' +
+
+              value.year + ' ' +
 
               value.mapStr + ' ' +
               value.collectStr + ' ' +
@@ -317,17 +362,15 @@ function MM_swapImage() { //v3.0
             $panel.append('<img class="img-responsive center-block" src="' + thumbnailUrl + '" width="220" height="126" alt="' + value.projectTitle + '" />');
 
             $panel.append('<h5 class="project-title">' + value.projectTitle + '</h5>');
-
             // link to the project poster
             if (value.pdfFileUrl !== "") {
-              $panel.append('<a class="project-link pull-left" href="' + value.pdfFileUrl + '" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Poster</p>');
+              $panel.append('<p><a class="project-link pull-left" href="' + value.pdfFileUrl + '" target="_blank"><span class="fa fa-file" aria-hidden="true"></span> Poster</p>');
             }
 
             // Some projects link out to one or more of Google Maps, a storybook,
             // a PDF, etc.
             // Add those links here
-
-            if (value.projectUrl !== null) {
+            if (value.projectUrl !== undefined) {
               // We expect links to be comma-separated in the JSON file
               var links = value.projectUrl.split(',');
 
@@ -350,22 +393,22 @@ function MM_swapImage() { //v3.0
                 // Add some fancy icons depending on link type.
                 // StoryMap icon
                 if ( linkStorymap > -1 || linkMapjournal > -1 || linkMapseries > -1) {
-                  linkInner = 'StoryMap <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>';
+                  linkInner = 'StoryMap <span class="fa fa-sitemap" aria-hidden="true"></span>';
 				// Video icon
                 } else if ( linkYoutube > -1 || linkVimeo > -1 ) {
-                  linkInner = 'Video <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>';
+                  linkInner = 'Video <span class="fa fa-video-camera" aria-hidden="true"></span>';
                 // PDF icon
                 } else if ( linkPdf > -1 ) {
-                  linkInner = 'Product <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>';
+                  linkInner = 'Product <span class="fa fa-image" aria-hidden="true"></span>';
                 // Map icon
                 } else if ( linkArcGis > -1 || linkGoogleMaps1 > -1 || linkGoogleMaps2 > -1 || linkTrackKit > -1 ) {
-                  linkInner = 'Map <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>';
+                  linkInner = 'Map <span class="fa fa-globe" aria-hidden="true"></span>';
                 // Link icon
                 } else {
-                  linkInner = 'Link <span class="glyphicon glyphicon-link" aria-hidden="true"></span>';
+                  linkInner = 'Link <span class="fa fa-link" aria-hidden="true"></span>';
                 }
 				 if ( fullUrl.length > 1 ) {
-                  $panel.append('<a class="project-link pull-right" href="' + fullUrl + '" target="_blank">' + linkInner + '</a><br>');
+          $panel.append('<p><a class="project-link pull-right" href="' + fullUrl + '" target="_blank">' + linkInner + '</a></p><br>');
 				}
 				}
             }
@@ -380,6 +423,10 @@ function MM_swapImage() { //v3.0
           });
 
           $('select#program').on('change', function() {
+            filter($projects);
+          });
+
+          $('select#year').on('change', function() {
             filter($projects);
           });
 
@@ -417,28 +464,41 @@ function MM_swapImage() { //v3.0
 
         var $categoriesFilter = $('#categories input');
         var $programFilter = $('select#program');
+        var $yearFilter = $('select#year');
         var $techFilter = $('select#tech');
         var $locationFilter = $('select#location');
-        var program, tech, loc;
+        var program, year, tech, loc;
 
         // Categories are inclusive, return more results
+        /*
         var inclusives = [];
         $categoriesFilter.each( function( i, elem ) {
           if ( elem.checked ) {
             inclusives.push( elem.value );
           }
-        });
+        });*/
 
+        // Categories are not inclusive, return less results
+        var inclusives = "";
+        $categoriesFilter.each( function( i, elem ) {
+          if ( elem.checked ) {
+            inclusives += elem.value
+          }
+        });
+        
         // Program, Tech, and Location are exclusive, return fewer results
         program = $programFilter.val();
+        year = $yearFilter.val();
         tech = $techFilter.val();
         loc = $locationFilter.val();
 
         // add exclusive filters so they look like '.cap.mapping.hartford'
-        var exclusives = program + tech + loc;
+        var exclusives = program + year + tech + loc;
 
         // combine inclusives and exclusives
         if (inclusives.length > 0) {
+          //commented code is for the old inclusive code (additive)
+          /*
           var filterList = [];
           var f = '';
           for (var i=0; i<inclusives.length; i++) {
@@ -446,6 +506,9 @@ function MM_swapImage() { //v3.0
             filterList.push(f)
           }
           var filterValue = filterList.length ? filterList.join(', ') : '*';
+          */
+          
+          var filterValue = inclusives + exclusives
         } else {
           filterValue = exclusives
         }
