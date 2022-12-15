@@ -103,8 +103,8 @@ function MM_swapImage() { //v3.0
         height: 250px;
       }
       .project-title {
-        font-size: 16px;
-        line-height:1.6em;
+        font-size: 14px;
+        line-height:1.4em;
         font-weight:600;
       }
       .project-item {
@@ -113,9 +113,11 @@ function MM_swapImage() { //v3.0
       }
       .project-item-content {
         padding: 10px 10px 10px 10px;
-        height: 400px;
+        height: 350px;
         background-color:#F0F3F7;
         border:none;
+        width:50%;
+        margin:10px auto;
       }
 
       .project-link {
@@ -148,12 +150,20 @@ function MM_swapImage() { //v3.0
         border:none;
       }
 
+      #project_filter {
+          position: static;
+      }
+
       /* Add sticky to prevent filter scroll */
-      @media screen and (min-width: 750px) {
+      @media screen and (min-width: 767px) {
         #project_filter {
           position: sticky;
-          top: 10px;
+          top: 0px;
           }
+
+        .project-item-content {
+        width:100%;
+      }
       }
       
       </style>
